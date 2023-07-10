@@ -1,0 +1,132 @@
+﻿@using Microsoft.AspNetCore.Components;
+@model IEnumerable<MagicVilla_Web.Models.DTO.VillaDTO>
+﻿@using MagicVilla_Utility
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor httpAcc
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" integrity="sha512-ZjPkoRyV4I4ZKZBoOw3DjZXbmyuhHCz00YpY3zqjHEjeyc7U0MdOvQXs5lx8feQud05yvtdyoWqZQoh3qFmmSw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="~/css/home.css">
+    <title>Villa Home Page</title>
+</head>
+<body>
+    <div class="container">
+        <div class="circle-container">
+            <div class="circle">
+                <button id="close">
+                    <i class="fas fa-times"></i>
+                </button>
+                <button id="open">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <div class="content">
+            <h1>Booking a villa</h1>
+            <p>
+                Welcome to our website! We are thrilled to offer you an unforgettable villa rental experience.
+                Whether you are planning a family vacation, a romantic getaway, or a group retreat,
+                we have the perfect villa to suit your needs.
+                Our carefully selected villas boast stunning locations,
+                with breathtaking views of the surrounding landscapes, be it pristine beaches, lush countryside,
+                or charming towns. Each villa is thoughtfully designed to provide a harmonious blend of luxury, comfort, and style.
+            </p>
+
+            <h3>Villas</h3>
+            <div class="villa-carousel-container">
+                <div class="villa-carousel">
+                    @foreach (var villa in Model)
+                    {
+                        <div class="villa-carousel-item">
+                            <div class="villa-carousel-image-container">
+                                <img class="villa-carousel-image" src="@villa.ImageUrl" alt="Villa Image">
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="villa-carousel-arrow villa-carousel-arrow-left" onclick="carouselPrev()">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="villa-carousel-arrow villa-carousel-arrow-right" onclick="carouselNext()">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+            <p>
+                Browse through our collection of villas, explore the stunning images and detailed descriptions,
+                and find the perfect villa that resonates with your desires.
+                Take advantage of our user-friendly booking system, which allows you to easily check availability,
+                select your preferred dates, and secure your reservation with a few simple clicks.
+            </p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card-deck">
+                    @foreach (var villa in Model)
+                    {
+                        <div class="card">
+                            <img class="card-img-top" src="@villa.ImageUrl" alt="Card 1">
+                            <div class="card-body">
+                                <h5 class="card-title">@villa.Name</h5>
+                                <p class="card-text">@villa.Details</p>
+                                <p class="card-text">
+                                    <i class="fas fa-users"></i> Max Occupancy: @villa.Occupancy adults
+                                </p>
+                                <p class="card-text">
+                                    <i class="fas fa-expand"></i> Villa Size: @villa.Sqft sqft
+                                </p>
+                                <p class="card-text">
+                                    <i class="fas fa-dollar-sign"></i> @villa.Rate
+                                </p>
+
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+    <nav>
+        <ul>
+            <li><i class="fas fa-home"></i><a asp-area="" asp-controller="Home" asp-action="Index"> Home</a></li>
+            <li><i class="fas fa-house-user"></i><a asp-area="" asp-controller="Villa" asp-action="IndexVilla"> Villa</a></li>
+            <li><i class="fas fa-hashtag"></i><a asp-area="" asp-controller="VillaNumber" asp-action="IndexVillaNumber"> Villa Number</a></li>
+             @if (httpAcc.HttpContext.Session.GetString(SD.SessionToken) != null &&
+                    httpAcc.HttpContext.Session.GetString(SD.SessionToken).ToString().Length > 0)
+            {
+                <li><i class="fas fa-sign-out-alt"></i><a asp-area="" asp-controller="Auth" asp-action="Logout">Logout</a></li>
+            }
+            else
+            {
+                <li><i class="fas fa-sign-in-alt"></i><a asp-area="" asp-controller="Auth" asp-action="Login">Login</a></li>
+                <li><i class="fas fa-user-plus"></i><a asp-area="" asp-controller="Auth" asp-action="Register">Register</a></li>
+            }
+
+        </ul>
+    </nav>
+    <script src="~/js/home.js"></script>
+    <script>
+        var carousel = document.querySelector('.villa-carousel');
+        var carouselItems = document.querySelectorAll('.villa-carousel-item');
+        var currentIndex = 0;
+
+        function carouselPrev() {
+            currentIndex = (currentIndex - 1 + carouselItems.length) % carouselItems.length;
+            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+        function carouselNext() {
+            currentIndex = (currentIndex + 1) % carouselItems.length;
+            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+    </script>
+</body>
+</html>

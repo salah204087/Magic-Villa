@@ -1,0 +1,63 @@
+﻿@model MagicVillaWeb.Models.DTO.LoginRequestDTO
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Design by foolishdeveloper.com -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/auth.css" />
+    <style>
+        .password-toggle {
+            position: relative;
+        }
+
+            .password-toggle .toggle-icon {
+                position: absolute;
+                top: 50%;
+                right: 10px;
+                transform: translateY(-50%);
+                cursor: pointer;
+            }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <form method="post">
+        <h3>Login</h3>
+        <div class="row text-center">
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </div>
+        <label asp-for="UserName">Username</label>
+        <input asp-for="UserName" type="text" placeholder="Email or Phone" id="username">
+        <label asp-for="Password">Password</label>
+        <div class="password-toggle">
+            <input asp-for="Password" type="password" placeholder="Password" id="password">
+            <i class="toggle-icon fas fa-eye" onclick="togglePasswordVisibility()"></i>
+        </div>
+        <button type="submit" value="Submit">Log In</button>
+    </form>
+    <script>
+        function togglePasswordVisibility() {
+            var passwordInput = document.getElementById("password");
+            var toggleIcon = document.querySelector(".toggle-icon");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleIcon.classList.remove("fa-eye");
+                toggleIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordInput.type = "password";
+                toggleIcon.classList.remove("fa-eye-slash");
+                toggleIcon.classList.add("fa-eye");
+            }
+        }
+    </script>
+</body>
+</html>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,87 @@
+﻿@model MagicVilla_Web.Models.DTO.VillaDTO
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/villapagestyle.css" />
+</head>
+<body>
+    <form asp-action="DeleteVilla" class="beautiful-form">
+        <div class="container">
+            <h1 class="text-primary">Delete Villa</h1>
+            <hr />
+            <input hidden asp-for="Id" />
+
+            <div class="form-group">
+                <label asp-for="Name">Name:</label>
+                <input asp-for="Name" disabled class="form-control beautiful-input">
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Rate">Rate:</label>
+                <input asp-for="Rate" disabled class="form-control beautiful-input">
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Details">Details:</label>
+                <textarea asp-for="Details" disabled class="form-control beautiful-input" rows="5"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ImageUrl">Image URL:</label>
+                <input asp-for="ImageUrl" disabled class="form-control beautiful-input">
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Occupancy">Occupancy:</label>
+                <input asp-for="Occupancy" disabled class="form-control beautiful-input">
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Sqft">Sqft:</label>
+                <input asp-for="Sqft" disabled class="form-control beautiful-input">
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Amenity">Amenity:</label>
+                <textarea asp-for="Amenity"disabled class="form-control beautiful-input"></textarea>
+            </div>
+            <br />
+            <div class="text-center">
+                <a asp-action="IndexVilla" asp-controller="Villa" class="btn btn-primary beautiful-button beautiful-button-white">Back to List</a>
+                <button type="submit" class="btn btn-danger beautiful-button">Delete</button>
+            </div>
+        </div>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Image input field change event handler
+            $('#ImageUrl').on('input', function () {
+                var imageUrl = $(this).val();
+                if (imageUrl !== '') {
+                    $('.background').hide();
+                } else {
+                    $('.background').show();
+                }
+                $('body').css({
+                    'background-image': 'url(' + imageUrl + ')',
+                    'background-size': 'cover'
+                });
+            });
+
+            // Check if the image input field has a value on page load
+            var imageUrl = $('#ImageUrl').val();
+            if (imageUrl) {
+                $('body').css({
+                    'background-image': 'url(' + imageUrl + ')',
+                    'background-size': 'cover'
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
+

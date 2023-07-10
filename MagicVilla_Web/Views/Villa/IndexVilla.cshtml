@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Villa List</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <style>
+        .container {
+            position: relative;
+        }
+
+        .page-size-buttons {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container p-4 border">
+        <div class="row pb-2">
+            <div class="col">
+                <h1 class="text-primary">Villa List</h1>
+            </div>
+            <div class="col text-end pt-1">
+                <a asp-controller="Villa" asp-action="CreateVilla" class="btn btn-outline-primary">
+                    <i class="fa-solid fa-circle-plus"></i> Create New Villa
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <input id="searchInput" class="form-control" type="text" placeholder="Search">
+            </div>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Occupancy
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="villaTableBody">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Occupancy</td>
+                        <td>@((item.Rate).ToString("c"))</td>
+                        <td>
+                            <a asp-controller="Villa" asp-action="UpdateVilla" asp-route-id="@item.Id" class="btn btn-success">
+                                <i class="fa-solid fa-square-pen"></i>
+                            </a>
+                            <a asp-controller="Villa" asp-action="DeleteVilla" asp-route-id="@item.Id" class="btn btn-danger">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />
+        <br />
+        <div class="page-size-buttons">
+            <div class="btn-group" role="group">
+                <button id="pageSize10" type="button" class="btn btn-secondary">10</button>
+                <button id="pageSize25" type="button" class="btn btn-secondary">25</button>
+                <button id="pageSize50" type="button" class="btn btn-secondary">50</button>
+                <button id="pageSize100" type="button" class="btn btn-secondary">100</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript code to handle search and page size selection
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const villaTableBody = document.getElementById('villaTableBody');
+
+        searchInput.addEventListener('input', function () {
+            const searchValue = searchInput.value.toLowerCase();
+            const villaRows = villaTableBody.getElementsByTagName('tr');
+
+            for (let i = 0; i < villaRows.length; i++) {
+                const nameCell = villaRows[i].getElementsByTagName('td')[0];
+                const occupancyCell = villaRows[i].getElementsByTagName('td')[1];
+                const priceCell = villaRows[i].getElementsByTagName('td')[2];
+
+                const nameText = nameCell.textContent || nameCell.innerText;
+                const occupancyText = occupancyCell.textContent || occupancyCell.innerText;
+                const priceText = priceCell.textContent || priceCell.innerText;
+
+                const shouldShow = nameText.toLowerCase().includes(searchValue) ||
+                    occupancyText.toLowerCase().includes(searchValue) ||
+                    priceText.toLowerCase().includes(searchValue);
+
+                villaRows[i].style.display = shouldShow ? '' : 'none';
+            }
+        });
+
+        // Page size selection functionality
+        const pageSize10 = document.getElementById('pageSize10');
+        const pageSize25 = document.getElementById('pageSize25');
+        const pageSize50 = document.getElementById('pageSize50');
+        const pageSize100 = document.getElementById('pageSize100');
+        const villaRows = villaTableBody.getElementsByTagName('tr');
+
+        pageSize10.addEventListener('click', function () {
+            updatePageSize(10);
+        });
+
+        pageSize25.addEventListener('click', function () {
+            updatePageSize(25);
+        });
+
+        pageSize50.addEventListener('click', function () {
+            updatePageSize(50);
+        });
+
+        pageSize100.addEventListener('click', function () {
+            updatePageSize(100);
+        });
+
+        function updatePageSize(pageSize) {
+            for (let i = 0; i < villaRows.length; i++) {
+                villaRows[i].style.display = i < pageSize ? '' : 'none';
+            }
+        }
+    </script>
+</body>
+</html>

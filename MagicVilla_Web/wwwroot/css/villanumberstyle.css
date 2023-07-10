@@ -1,0 +1,132 @@
+﻿body {
+    background-color: #080710;
+    color: #ffffff;
+}
+
+.background {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+    .background .shape {
+        height: 200px;
+        width: 200px;
+        position: absolute;
+        border-radius: 50%;
+        z-index: -1; /* Adjust the z-index to position the shapes above the body content */
+    }
+
+.shape:first-child {
+    background: linear-gradient(#1845ad, #23a2f6);
+    left: -80px;
+    top: -80px;
+}
+
+.shape:last-child {
+    background: linear-gradient(to right, #ff512f, #f09819);
+    right: -30px;
+    bottom: -80px;
+}
+
+.beautiful-form {
+    width: 90%;
+    max-width: 800px;
+    margin: 50px auto 0;
+    background-color: rgba(255, 255, 255, 0.13);
+    position: relative;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+    padding: 50px 35px;
+}
+
+    .beautiful-form * {
+        font-family: 'Poppins', sans-serif;
+        outline: none;
+        border: none;
+    }
+
+    .beautiful-form h1 {
+        font-size: 32px;
+        font-weight: 500;
+        line-height: 42px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+label {
+    display: block;
+    margin-top: 30px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.beautiful-input {
+    display: block;
+    height: 50px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.07);
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 300;
+    color: #ffffff;
+}
+
+    .beautiful-input:focus {
+        background-color: rgba(255, 255, 255, 1);
+        outline: none;
+    }
+
+textarea.beautiful-input {
+    resize: vertical;
+    color: #ffffff;
+}
+
+::placeholder {
+    color: #e5e5e5;
+    opacity: 1;
+}
+
+.beautiful-button {
+    margin-top: 50px;
+    width: 100%;
+    background-color: #ffffff;
+    color: #080710;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.beautiful-button-white {
+    background-color: white;
+    color: black;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+    .beautiful-button-white:hover {
+        background-color: black;
+        color: white;
+    }
+
+.beautiful-input:disabled {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #888888;
+}
+
+    .beautiful-input:disabled::placeholder {
+        color: #cccccc;
+    }

@@ -1,0 +1,50 @@
+﻿@model MagicVilla_Web.Models.VM.VillaNumberUpdateVM
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/villanumberstyle.css" />
+
+</head>
+<body>
+    <form asp-action="UpdateVillaNumber" class="beautiful-form">
+        <div class="container">
+            <h1 class="text-primary">Update Villa Number</h1>
+            <hr />
+            <input hidden asp-for="VillaNumber.VillaNo" />
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="VillaNumber.VillaNo">Villa Number:</label>
+                <input asp-for="VillaNumber.VillaNo" disabled class="form-control beautiful-input">
+                <span asp-validation-for="VillaNumber.VillaNo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="VillaNumber.VillaID">Villa ID:</label>
+                <select asp-for="VillaNumber.VillaID" class="form-select" asp-items="@Model.VillaList">
+                    <option disabled selected>--Select Villa--</option>
+                </select>
+                <span asp-validation-for="VillaNumber.VillaID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VillaNumber.SpecialDetails">Special Details:</label>
+                <textarea asp-for="VillaNumber.SpecialDetails" class="form-control beautiful-input" rows="5"></textarea>
+                <span asp-validation-for="VillaNumber.SpecialDetails" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="text-center">
+                <a asp-action="IndexVillaNumber" asp-controller="VillaNumber" class="btn btn-primary beautiful-button beautiful-button-white">Back to List</a>
+                <button type="submit" class="btn btn-success beautiful-button">Update</button>
+            </div>
+        </div>
+    </form>
+
+</body>
+</html>
+
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
